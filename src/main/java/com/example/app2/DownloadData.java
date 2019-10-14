@@ -21,10 +21,18 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class DownloadData extends AsyncTask<String, Void, ArrayList<Item>> {
     public static final String TAG = "DownloadData";
+    private final Model.OnItemClickListener callback;
+
+    DownloadData(Model.OnItemClickListener callback) {
+        this.callback = callback;
+    }
 
     @Override
     protected void onPostExecute(ArrayList<Item> items) {
         super.onPostExecute(items);
+        if (callback != null) {
+            callback.onItemClick(items);
+        }
 
     }
 

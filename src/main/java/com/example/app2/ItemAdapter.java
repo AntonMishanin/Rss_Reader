@@ -8,19 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
-    private ArrayList<Item> news;
+    private ArrayList<Item> news= new ArrayList<>();
     private Context context;
     private boolean[] descriptionVisible;
 
-    public ItemAdapter(Context appContext, ArrayList<Item> items) {
-        this.news = items;
-        this.context = appContext;
-        descriptionVisible = new boolean[items.size()];
-    }
     @Override
     public ItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
@@ -32,22 +29,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         holder.title.setText(news.get(position).getTitle());
         holder.pubDate.setText(news.get(position).getPubDate());
         holder.site.setText(news.get(position).getSite());
-       // if (descriptionVisible[position]) {
+        if (descriptionVisible[position]) {
             holder.description.setText(news.get(position).getDescription());
-       // } else {
-       //     holder.description.setText("");
-        //}
-       // try {
-        //    Picasso.with(context)
-       //             .load(news.get(position).getImage())
-      //              .placeholder(R.drawable.ic_launcher_background)
-      //              .into(holder.imageView);
-      //  } catch (Exception e) {
-           // Picasso.with(context)
-             //       .load(R.drawable.ic_launcher_background)
-               //     .placeholder(R.drawable.ic_launcher_background)
-                 //   .into(holder.imageView);
-    //    }
+        } else {
+            holder.description.setText("");
+        }
+        try {
+            Picasso.with(context)
+                    .load(news.get(position).getImage())
+                   .placeholder(R.drawable.ic_launcher_background)
+                    .into(holder.imageView);
+        } catch (Exception e) {
+            Picasso.with(context)
+                    .load(R.drawable.ic_launcher_background)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(holder.imageView);
+        }
     }
 
     @Override
@@ -55,9 +52,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         return news.size();
     }
 
-    public void setData(ArrayList<Item> items) {
+    public void setData(ArrayList<Item> items, Context context) {
         news.clear();
         news.addAll(items);
+        descriptionVisible = new boolean[items.size()];
+        this.context=context;
         notifyDataSetChanged();
     }
 
@@ -84,7 +83,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     if (pos != RecyclerView.NO_POSITION) {
 
                         notifyItemChanged(pos);
-                       // descriptionVisible[pos]=!descriptionVisible[pos];
+                        descriptionVisible[pos]=!descriptionVisible[pos];
                         notifyItemChanged(pos);
                     }
                 }

@@ -24,14 +24,14 @@ public class View extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(View.this);
         recyclerView.setLayoutManager(layoutManager);
         Model model = new Model();
-        ArrayList<Item> items = model.downloadData();
-        adapter = new ItemAdapter(getApplicationContext(), items);
+        adapter = new ItemAdapter();
         recyclerView.setAdapter(adapter);
-        presenter = new Presenter();
+        presenter = new Presenter(model);
+        presenter.attachView(this);
         presenter.viewIsReady();
     }
 
     public void loadNews(ArrayList<Item> items) {
-        adapter.setData(items);
+        adapter.setData(items,getApplicationContext());
     }
 }
