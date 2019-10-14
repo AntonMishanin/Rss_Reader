@@ -1,4 +1,5 @@
 # Rss_Reader
 
-The app displays news sorted by time from two specified sources.
-Using the MVP architecture.
+1. The app displays news sorted by time from two specified sources.
+2. Using the MVP architecture.
+3. Clicking on a list item adds a description
